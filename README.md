@@ -1,0 +1,2 @@
+# katas
+small kata repo

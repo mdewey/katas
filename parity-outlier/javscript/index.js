@@ -5,7 +5,7 @@ const findOutlier = (numbers) => {
             _data.lastEven = num;
         } else {
             _data.oddCount++
-            _data.lastOdd = num;
+            _data.tOdd = num;
         }
         return _data;
     }, {

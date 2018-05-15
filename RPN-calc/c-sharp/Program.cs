@@ -14,12 +14,8 @@ namespace c_sharp
             {"/", (a, b) => a / b}
         };
 
-        public static double evaluate(String expr)
-        {
-            if (String.IsNullOrWhiteSpace(expr)) return 0.0;
-            var ops = expr.Split(' ');
-            var stack = new Stack<double>();
-            foreach (var op in ops)
+        public static double evaluate(String expr) =>
+          String.IsNullOrWhiteSpace(expr) ? 0.0 : expr.Split(' ').Aggregate(new Stack<double>(), (stack, op) =>
             {
                 var isNumber = Double.TryParse(op, out double number);
                 if (isNumber)
@@ -33,9 +29,9 @@ namespace c_sharp
                     var answer = math[op](y, x);
                     stack.Push(answer);
                 }
-            }
-            return stack.Pop();
-        }
+                return stack;
+            }).Pop();
+
 
         static void Main(string[] args)
         {

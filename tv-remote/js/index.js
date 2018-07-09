@@ -70,22 +70,22 @@ const getWordDifference = (hash, word) => {
         x: 0,
         y: 0
     }
-    let rv = 0;
-    const text = word
+    let total = 0;
+    const data = word
         .split('')
-        .forEach(letter => {
-            rv += Math.abs(hash[letter].x - lastPos.x);
-            rv += Math.abs(hash[letter].y - lastPos.y);
-            rv++; // "Ok"
-            lastPos = hash[letter]
-            console.log({letter, pos: hash[letter], rv})
-        })
-    console.log({lastPos, rv})
-    // const rv = word.split
-    return rv;
+        .reduce((acc, letter) => {
+            acc.total += Math.abs(hash[letter].x - acc.lastPos.x);
+            acc.total += Math.abs(hash[letter].y - acc.lastPos.y);
+            acc.total++; // "Ok"
+            acc.lastPos = hash[letter]
+            return acc;
+        }, {lastPos, total})
+    return data.total;
 }
 
 const tvRemote = (word) => {
     const hash = buildHash();
     return getWordDifference(hash, word)
 }
+
+tvRemote("codewars")

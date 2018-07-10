@@ -9,6 +9,8 @@ namespace c_sharp
 
         public class Interpreter
         {
+            // valid Commands
+            public string ValidCommands { get { return "<>+*"; } }
             // <address, value>
             private Dictionary<int, int> _memory = new Dictionary<int, int>();
             private int _dataSelector = 0;
@@ -21,20 +23,20 @@ namespace c_sharp
                 commands = new Dictionary<char, Action>{
                 // >: Move data selector right
                 {'>', () => {
-                    Console.WriteLine("Incrementing Data Selector");
+                    // Console.WriteLine("Incrementing Data Selector");
                     this._dataSelector++;
 
                 }},
 
                 // <: Move data selector left(infinite in both directions)
                 {'<', () => {
-                     Console.WriteLine("Decrementing Data Selector");
+                    //  Console.WriteLine("Decrementing Data Selector");
                     this._dataSelector--;
                 }},
 
                 // +: Increment memory cell by 1. 255+1=0
                 {'+', () => {
-                    Console.WriteLine("Executing +");
+                    // Console.WriteLine("Executing +");
                     if (this._memory.ContainsKey(this._dataSelector)){
                         if (this._memory[this._dataSelector] == 255){
                             this._memory[this._dataSelector] = 0;
@@ -48,7 +50,7 @@ namespace c_sharp
 
                 // *: Add ascii value of memory cell to the output tape.
                 {'*', () => {
-                    Console.WriteLine("Executing *");
+                    // Console.WriteLine("Executing *");
                     this._tape.Add((char)this._memory[this._dataSelector]);
                 }},
             };
@@ -73,7 +75,10 @@ namespace c_sharp
                 var processor = new Interpreter();
                 tape.ToList().ForEach(command =>
                 {
-                    processor.ProcessCommand(command);
+                    if (processor.ValidCommands.Contains(command))
+                    {
+                        processor.ProcessCommand(command);
+                    }
                 });
                 System.Console.WriteLine(processor);
                 System.Console.WriteLine(processor.GetCurrentMemoryValue());
@@ -84,8 +89,8 @@ namespace c_sharp
         static void Main(string[] args)
         {
             var helloWorld = "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*>+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*>++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++**>+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*>++++++++++++++++++++++++++++++++*>+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*<<*>>>++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*<<<<*>>>>>++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*>+++++++++++++++++++++++++++++++++*";
-
-            Console.WriteLine(Ticker.Interpret(helloWorld));
+            var bullshit = "asdf+++";
+            Console.WriteLine(Ticker.Interpret(bullshit));
         }
     }
 }

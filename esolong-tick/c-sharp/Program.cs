@@ -47,13 +47,18 @@ namespace c_sharp
                 }},
 
                 // *: Add ascii value of memory cell to the output tape.
-                {'*', () => {Console.WriteLine("Excecuting *");}},
+                {'*', () => {
+                    Console.WriteLine("Executing *");
+                    this._tape.Add((char)this._memory[this._dataSelector]);
+                }},
             };
 
             }
             public void ProcessCommand(char command) => this.commands[command]();
 
             public int GetCurrentMemoryValue() => this._memory[this._dataSelector];
+
+            public string GetTape() => String.Join("", this._tape);
 
             public override string ToString()
             {
@@ -72,7 +77,7 @@ namespace c_sharp
                 });
                 System.Console.WriteLine(processor);
                 System.Console.WriteLine(processor.GetCurrentMemoryValue());
-                return tape;
+                return processor.GetTape();
             }
         }
 
@@ -80,11 +85,7 @@ namespace c_sharp
         {
             var helloWorld = "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*>+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*>++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++**>+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*>++++++++++++++++++++++++++++++++*>+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*<<*>>>++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*<<<<*>>>>>++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*>+++++++++++++++++++++++++++++++++*";
 
-            var test = new String('+', 256);
-
-            Console.WriteLine(Ticker.Interpret(test));
-
-            Console.WriteLine("Hello World!");
+            Console.WriteLine(Ticker.Interpret(helloWorld));
         }
     }
 }

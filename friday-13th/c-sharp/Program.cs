@@ -8,10 +8,9 @@ namespace c_sharp
     {
         public class Kata
         {
-            public static IEnumerable<string>  KillCount(Dictionary<string, int> counselors, int jason)
+            public static string[] KillCount(Dictionary<string, int> counselors, int jason)
             {
-                // insert your code here
-                return counselors.Where(person => person.Value < jason).Select(s => s.Key);
+                return counselors.Where(person => person.Value < jason).Select(s => s.Key).ToArray();
             }
         }
         static void Main(string[] args)

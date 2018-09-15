@@ -1,0 +1,16 @@
+{
+  "name": "lemmings",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "ts-node": "^7.0.1",
+    "typescript": "^3.0.3"
+  },
+  "scripts": {
+    "start": "ts-node index.2.ts"
+  },
+  "dependencies": {
+    "tsc-watch": "^1.0.27"
+  }
+}

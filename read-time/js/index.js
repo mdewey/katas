@@ -39,6 +39,9 @@ const getNumberAsText = (number) => {
 	return table[parseInt(number)];
 };
 
+const getMinutesLabel = (minutes) => (minutes === 1 ? 'minute' : 'minutes');
+const getMidnightLabel = (rawHour, target, hour) =>
+	rawHour === target ? 'midnight' : getNumberAsText(hour);
 const timeConverter = (time) => {
 	const splatted = time.split(':');
 	const rawHour = parseInt(splatted[0]);
@@ -53,26 +56,24 @@ const timeConverter = (time) => {
 		}
 	} else if (minutes <= 30) {
 		if (minutes === 15) {
-			rv = `quarter past ${rawHour === 0 ? 'midnight' : getNumberAsText(hour)}`;
+			rv = `quarter past ${getMidnightLabel(rawHour, 0, hour)}`;
 		} else if (minutes === 30) {
-			rv = `half past ${rawHour === 0 ? 'midnight' : getNumberAsText(hour)}`;
+			rv = `half past ${getMidnightLabel(rawHour, 0, hour)}`;
 		} else {
-			rv = `${getNumberAsText(minutes)} ${
-				minutes === 1 ? 'minute' : 'minutes'
-			} past ${rawHour === 0 ? 'midnight' : getNumberAsText(hour)}`;
+			rv = `${getNumberAsText(minutes)} ${getMinutesLabel(
+				minutes
+			)} past ${getMidnightLabel(rawHour, 0, hour)}`;
 		}
 	} else {
 		rv = time;
 		const timeLeft = 60 - minutes;
 		const nextHour = hour + 1 == 13 ? 1 : hour + 1;
 		if (timeLeft === 15) {
-			rv = `quarter to ${
-				rawHour === 23 ? 'midnight' : getNumberAsText(nextHour)
-			}`;
+			rv = `quarter to ${getMidnightLabel(rawHour, 23, nextHour)}`;
 		} else {
-			rv = `${getNumberAsText(timeLeft)} ${
-				timeLeft === 1 ? 'minute' : 'minutes'
-			} to ${rawHour === 23 ? 'midnight' : getNumberAsText(nextHour)}`;
+			rv = `${getNumberAsText(timeLeft)} ${getMinutesLabel(
+				timeLeft
+			)} to ${getMidnightLabel(rawHour, 23, nextHour)}`;
 		}
 	}
 	return rv;
